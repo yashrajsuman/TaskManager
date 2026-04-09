@@ -114,3 +114,56 @@ export class TodoService {
   ]
 })
 export class AppModule { }
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TodoService } from '../../services/todo';
+import { Todo } from '../../models/todo';
+
+@Component({
+  selector: 'app-todo',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './todo.html',
+  styleUrls: ['./todo.css']
+})
+export class TodoComponent {
+
+  todos: Todo[] = [];
+  newTodo: string = '';
+
+  constructor(private todoService: TodoService) {
+    this.loadTodos();
+  }
+
+  loadTodos() {
+    this.todoService.getTodos().subscribe(data => {
+      this.todos = data;
+    });
+  }
+
+  addTodo() {
+    if (!this.newTodo.trim()) return;
+
+    const todo: Todo = {
+      title: this.newTodo,
+      completed: false
+    };
+
+    this.todoService.addTodo(todo).subscribe(() => {
+      this.newTodo = '';
+      this.loadTodos();
+    });
+  }
+
+  toggleComplete(todo: Todo) {
+    todo.completed = !todo.completed;
+    this.todoService.updateTodo(todo).subscribe();
+  }
+
+  deleteTodo(id: number) {
+    this.todoService.deleteTodo(id).subscribe(() => {
+      this.loadTodos();
+    });
+  }
+}
