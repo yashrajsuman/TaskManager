@@ -1,169 +1,102 @@
-import { FormsModule } from '@angular/forms';
 
-@NgModule({
-  imports: [
-    FormsModule
-  ]
-})<div style="width: 400px; margin: auto;">
-  <h2>Todo App</h2>
 
-  <input [(ngModel)]="newTodo" placeholder="Enter task" />
-  <button (click)="addTodo()">Add</button>
+✈️ Slide 2: Introduction
+Internship at Boeing
+Worked in software/IT domain
+Focus on backend & cloud technologies
+Exposure to real-world industry practices
 
-  <ul>
-    <li *ngFor="let todo of todos">
-      
-      <input type="checkbox"
-             [checked]="todo.completed"
-             (change)="toggleComplete(todo)" />
+Speaker line:
+“I had the opportunity to intern at Boeing, where I worked on backend and cloud-based technologies and gained real-world development experience.”
 
-      <span [style.text-decoration]="todo.completed ? 'line-through' : 'none'">
-        {{ todo.title }}
-      </span>
+🏢 Slide 3: Company Profile
+Boeing is a leading aerospace company
+Designs aircraft, defense systems, and space technology
+Global presence in over 150 countries
+Focus on innovation and advanced engineering
 
-      <button (click)="deleteTodo(todo.id!)">Delete</button>
-    </li>
-  </ul>
-</div>import { Component, OnInit } from '@angular/core';
-import { TodoService } from 'src/app/services/todo.service';
-import { Todo } from 'src/app/models/todo';
+Speaker line:
+“Boeing is one of the world’s largest aerospace companies, known for its innovation in aviation, defense, and space technology.”
 
-@Component({
-  selector: 'app-todo',
-  templateUrl: './todo.component.html'
-})
-export class TodoComponent implements OnInit {
+🎯 Slide 4: Internship Objectives
+Understand real-world software development
+Learn backend and cloud technologies
+Work in a professional environment
+Improve problem-solving & communication skills
 
-  todos: Todo[] = [];
-  newTodo: string = '';
+Speaker line:
+“The main objective of my internship was to gain practical exposure and improve both technical and professional skills.”
 
-  constructor(private todoService: TodoService) {}
+📅 Slide 5: Work Done (Summary)
+Week 1: Project onboarding & environment setup
+Week 2: Learning Spring Boot & backend development
+Week 3: Working with Docker & CI/CD pipelines
+Week 4: Deployment using Terraform & Azure VMs
 
-  ngOnInit(): void {
-    this.loadTodos();
-  }
+Speaker line:
+“My work progressed from understanding the system to developing, containerizing, and deploying applications.”
 
-  loadTodos() {
-    this.todoService.getTodos().subscribe(data => {
-      this.todos = data;
-    });
-  }
+💻 Slide 6: Technical Learning
+Backend development using Spring Boot
+Containerization using Docker
+CI/CD pipeline concepts
+Infrastructure as Code using Terraform
+Cloud deployment on Azure Virtual Machines
 
-  addTodo() {
-    if (!this.newTodo.trim()) return;
+Speaker line:
+“I learned how modern applications are built, containerized, and deployed using cloud technologies.”
 
-    const todo: Todo = {
-      title: this.newTodo,
-      completed: false
-    };
+🚀 Slide 7: Deliverables & Outcomes
+Developed backend modules using Spring Boot
+Created Docker containers for applications
+Implemented CI/CD pipeline basics
+Deployed application on Azure VM using Terraform
 
-    this.todoService.addTodo(todo).subscribe(() => {
-      this.newTodo = '';
-      this.loadTodos();
-    });
-  }
+Speaker line:
+“My key contributions included backend development and deploying applications using modern DevOps tools.”
 
-  toggleComplete(todo: Todo) {
-    todo.completed = !todo.completed;
-    this.todoService.updateTodo(todo).subscribe();
-  }
+🛠️ Slide 8: Tools & Technologies
+Languages: Java
+Framework: Spring Boot
+DevOps Tools: Docker, CI/CD
+Cloud: Microsoft Azure (VMs)
+IaC Tool: Terraform
+Others: Git, VS Code
 
-  deleteTodo(id: number) {
-    this.todoService.deleteTodo(id).subscribe(() => {
-      this.loadTodos();
-    });
-  }
-}import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Todo } from '../models/todo';
+Speaker line:
+“I used a combination of backend, DevOps, and cloud tools to complete my tasks.”
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TodoService {
+⚠️ Slide 9: Challenges & Solutions
+Challenge	Solution
+Understanding Spring Boot	Learned via docs & practice
+Docker setup issues	Debugging & testing
+CI/CD pipeline errors	Step-by-step troubleshooting
+Cloud deployment issues	Used logs & documentation
 
-  private apiUrl = 'http://localhost:8080/api/tasks';
+Speaker line:
+“I faced challenges mainly during setup and deployment, which I solved through debugging and learning from documentation.”
 
-  constructor(private http: HttpClient) {}
+🌱 Slide 10: Skills Gained
+Backend development
+Cloud & DevOps basics
+Problem-solving skills
+Team collaboration
+Communication skills
 
-  getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.apiUrl);
-  }
+Speaker line:
+“This internship helped me grow both technically and professionally.”
 
-  addTodo(todo: Todo): Observable<Todo> {
-    return this.http.post<Todo>(this.apiUrl, todo);
-  }
+🎯 Slide 11: Conclusion
+Valuable real-world experience
+Improved technical knowledge
+Exposure to industry practices
+Grateful for the opportunity
 
-  updateTodo(todo: Todo): Observable<Todo> {
-    return this.http.put<Todo>(`${this.apiUrl}/${todo.id}`, todo);
-  }
+Speaker line:
+“Overall, this internship was a great learning experience, and I’m thankful to Boeing and my college for this opportunity.”
 
-  deleteTodo(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-}export interface Todo {
-  id?: number;
-  title: string;
-  completed: boolean;
-}import { HttpClientModule } from '@angular/common/http';
+🙏 Slide 12: Thank You
 
-@NgModule({
-  imports: [
-    HttpClientModule
-  ]
-})
-export class AppModule { }
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { TodoService } from '../../services/todo';
-import { Todo } from '../../models/todo';
+Thank You!
 
-@Component({
-  selector: 'app-todo',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './todo.html',
-  styleUrls: ['./todo.css']
-})
-export class TodoComponent {
-
-  todos: Todo[] = [];
-  newTodo: string = '';
-
-  constructor(private todoService: TodoService) {
-    this.loadTodos();
-  }
-
-  loadTodos() {
-    this.todoService.getTodos().subscribe(data => {
-      this.todos = data;
-    });
-  }
-
-  addTodo() {
-    if (!this.newTodo.trim()) return;
-
-    const todo: Todo = {
-      title: this.newTodo,
-      completed: false
-    };
-
-    this.todoService.addTodo(todo).subscribe(() => {
-      this.newTodo = '';
-      this.loadTodos();
-    });
-  }
-
-  toggleComplete(todo: Todo) {
-    todo.completed = !todo.completed;
-    this.todoService.updateTodo(todo).subscribe();
-  }
-
-  deleteTodo(id: number) {
-    this.todoService.deleteTodo(id).subscribe(() => {
-      this.loadTodos();
-    });
-  }
-}
+Any Questions?
